@@ -1,5 +1,5 @@
 #auth service proto gen
-protoc -I protos/auth/proto --go_out=protos/auth/gen --go_opt=paths=source_relative --go-grpc_out=protos/auth/gen --go-grpc_opt=paths=source_relative auth.proto
+protoc -I proto proto/auth/auth.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
 
 #user service proto gen 
 protoc -I protos/user/proto --go_out=protos/user/gen --go_opt=paths=source_relative --go-grpc_out=protos/user/gen --go-grpc_opt=paths=source_relative user.proto
