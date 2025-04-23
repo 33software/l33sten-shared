@@ -240,7 +240,7 @@ const file_auth_proto_rawDesc = "" +
 	"\x05token\x18\x01 \x01(\tR\x05token2s\n" +
 	"\x04Auth\x120\n" +
 	"\x05Login\x12\x12.auth.LoginRequest\x1a\x13.auth.LoginResponse\x129\n" +
-	"\bRegister\x12\x15.auth.RegisterRequest\x1a\x16.auth.RegisterResponseB:Z8github.com/yourorg/l33sten-shared/protos/auth/gen;authpbb\x06proto3"
+	"\bRegister\x12\x15.auth.RegisterRequest\x1a\x16.auth.RegisterResponseB=Z;github.com/33software/l33sten-shared/protos/auth/gen;authpbb\x06proto3"
 
 var (
 	file_auth_proto_rawDescOnce sync.Once

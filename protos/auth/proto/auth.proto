@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package auth;
 
-option go_package = "github.com/yourorg/l33sten-shared/protos/auth/gen;authpb";
+option go_package = "github.com/33software/l33sten-shared/protos/auth/gen;authpb";
 
 service Auth {
     rpc Login(LoginRequest) returns (LoginResponse);
