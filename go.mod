@@ -3,6 +3,7 @@ module github.com/33software/l33sten-shared
 go 1.24.0
 
 require (
+	github.com/golang-jwt/jwt/v4 v4.5.2
 	google.golang.org/grpc v1.72.0
 	google.golang.org/protobuf v1.36.6
 )
