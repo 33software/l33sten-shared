@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "github.com/33software/l33sten-shared/gen/go/user";
+
+message Empty {}
+
+service User {
+    rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+    rpc DeleteUser(DeleteUserRequest) returns (Empty);
+    rpc GetUserByUsername(GetUserByUsernameRequest) returns (GetUserByUsernameResponse);
+}
+
+message CreateUserRequest {
+    string email = 1;
+    string username = 2;
+    string password = 3;
+}
+
+message CreateUserResponse {
+    string userid = 1;
+}
+
+message DeleteUserRequest {
+    string userid = 1;
+}
+
+message GetUserByUsernameRequest {
+    string username = 1;
+}
+
+message GetUserByUsernameResponse{
+    string userid = 1;
+    string email  = 2;
+    string username = 3;
+    string password = 4;
+}

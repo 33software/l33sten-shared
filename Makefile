@@ -2,7 +2,7 @@
 protoc -I proto proto/auth/auth.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
 
 #user service proto gen 
-protoc -I protos/user/proto --go_out=protos/user/gen --go_opt=paths=source_relative --go-grpc_out=protos/user/gen --go-grpc_opt=paths=source_relative user.proto
+protoc -I proto proto/user/user.proto --go_out=./gen/go/ --go_opt=paths=source_relative --go-grpc_out=./gen/go/ --go-grpc_opt=paths=source_relative
 
 #playlist service proto gen 
 protoc -I protos/playlist/proto --go_out=protos/playlist/gen --go_opt=paths=source_relative --go-grpc_out=protos/playlist/gen --go-grpc_opt=paths=source_relative playlist.proto
