@@ -33,6 +33,6 @@ func ErrToGRPCStatus (err error) error {
 	case errors.Is(err, sharederr.ErrNotFound):
 		return status.Error(codes.NotFound, err.Error())
 	default:
-		return status.Error(codes.Internal, "internal server error")
+		return status.Error(codes.Internal, err.Error())
 	}
 }
