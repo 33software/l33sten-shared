@@ -32,6 +32,8 @@ func ErrToGRPCStatus (err error) error {
 		return status.Error(codes.AlreadyExists, err.Error())
 	case errors.Is(err, sharederr.ErrNotFound):
 		return status.Error(codes.NotFound, err.Error())
+	case errors.Is(err, sharederr.ErrMismatchedPass):
+		return status.Error(codes.Unauthenticated, "Unauthenticated")
 	default:
 		return status.Error(codes.Internal, err.Error())
 	}
