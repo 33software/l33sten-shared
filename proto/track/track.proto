@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package track;
+
+option go_package = "github.com/33software/l33sten-shared/gen/go/track";
+
+message Empty{}
+
+service Track {
+    rpc Search (SearchTrackRequest) returns (SearchTracksResponse);
+    rpc Download (DownloadTrackRequest) returns (Empty);
+    rpc Save (SaveTrackRequest) returns (Empty);
+}
+
+message SearchTrackRequest {
+    string query = 1;
+}
+
+message SearchTracksResponse {
+  repeated SearchTrackResponse tracks = 1;
+}
+
+message SearchTrackResponse {
+  string title     = 1;
+  string artist    = 2;
+  int32 duration   = 3;
+  string coverurl  = 4;
+  string permalink = 5;
+}
+    
+message DownloadTrackRequest {
+    string title = 1;
+    string artist = 2;
+    int32 duration = 3;
+    string coverurl = 4;
+    string permalink =5;
+}
+
+message SaveTrackRequest {
+    string userid = 1;
+    string title = 2;
+    string artist = 3;
+    int32 duration = 4;
+    string coverurl = 5;
+    string origin = 6;
+    string s3uuid = 7;
+}
