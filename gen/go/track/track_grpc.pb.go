@@ -19,9 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Track_Search_FullMethodName   = "/track.Track/Search"
-	Track_Download_FullMethodName = "/track.Track/Download"
-	Track_Save_FullMethodName     = "/track.Track/Save"
+	Track_Search_FullMethodName    = "/track.Track/Search"
+	Track_Download_FullMethodName  = "/track.Track/Download"
+	Track_Save_FullMethodName      = "/track.Track/Save"
+	Track_GetTracks_FullMethodName = "/track.Track/GetTracks"
 )
 
 // TrackClient is the client API for Track service.
@@ -31,6 +32,7 @@ type TrackClient interface {
 	Search(ctx context.Context, in *SearchTrackRequest, opts ...grpc.CallOption) (*SearchTracksResponse, error)
 	Download(ctx context.Context, in *DownloadTrackRequest, opts ...grpc.CallOption) (*Empty, error)
 	Save(ctx context.Context, in *SaveTrackRequest, opts ...grpc.CallOption) (*Empty, error)
+	GetTracks(ctx context.Context, in *GetTracksRequest, opts ...grpc.CallOption) (*GetTracksResponse, error)
 }
 
 type trackClient struct {
@@ -71,6 +73,16 @@ func (c *trackClient) Save(ctx context.Context, in *SaveTrackRequest, opts ...gr
 	return out, nil
 }
 
+func (c *trackClient) GetTracks(ctx context.Context, in *GetTracksRequest, opts ...grpc.CallOption) (*GetTracksResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetTracksResponse)
+	err := c.cc.Invoke(ctx, Track_GetTracks_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TrackServer is the server API for Track service.
 // All implementations must embed UnimplementedTrackServer
 // for forward compatibility.
@@ -78,6 +90,7 @@ type TrackServer interface {
 	Search(context.Context, *SearchTrackRequest) (*SearchTracksResponse, error)
 	Download(context.Context, *DownloadTrackRequest) (*Empty, error)
 	Save(context.Context, *SaveTrackRequest) (*Empty, error)
+	GetTracks(context.Context, *GetTracksRequest) (*GetTracksResponse, error)
 	mustEmbedUnimplementedTrackServer()
 }
 
@@ -96,6 +109,9 @@ func (UnimplementedTrackServer) Download(context.Context, *DownloadTrackRequest)
 }
 func (UnimplementedTrackServer) Save(context.Context, *SaveTrackRequest) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Save not implemented")
+}
+func (UnimplementedTrackServer) GetTracks(context.Context, *GetTracksRequest) (*GetTracksResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetTracks not implemented")
 }
 func (UnimplementedTrackServer) mustEmbedUnimplementedTrackServer() {}
 func (UnimplementedTrackServer) testEmbeddedByValue()               {}
@@ -172,6 +188,24 @@ func _Track_Save_Handler(srv interface{}, ctx context.Context, dec func(interfac
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Track_GetTracks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetTracksRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TrackServer).GetTracks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Track_GetTracks_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TrackServer).GetTracks(ctx, req.(*GetTracksRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Track_ServiceDesc is the grpc.ServiceDesc for Track service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -190,6 +224,10 @@ var Track_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Save",
 			Handler:    _Track_Save_Handler,
+		},
+		{
+			MethodName: "GetTracks",
+			Handler:    _Track_GetTracks_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

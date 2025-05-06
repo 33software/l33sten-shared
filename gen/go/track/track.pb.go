@@ -389,6 +389,94 @@ func (x *SaveTrackRequest) GetS3Uuid() string {
 	return ""
 }
 
+type GetTracksRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Ids           []string               `protobuf:"bytes,1,rep,name=ids,proto3" json:"ids,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTracksRequest) Reset() {
+	*x = GetTracksRequest{}
+	mi := &file_track_track_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTracksRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTracksRequest) ProtoMessage() {}
+
+func (x *GetTracksRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_track_track_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTracksRequest.ProtoReflect.Descriptor instead.
+func (*GetTracksRequest) Descriptor() ([]byte, []int) {
+	return file_track_track_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *GetTracksRequest) GetIds() []string {
+	if x != nil {
+		return x.Ids
+	}
+	return nil
+}
+
+type GetTracksResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Tracks        []*SearchTrackResponse `protobuf:"bytes,1,rep,name=tracks,proto3" json:"tracks,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetTracksResponse) Reset() {
+	*x = GetTracksResponse{}
+	mi := &file_track_track_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetTracksResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetTracksResponse) ProtoMessage() {}
+
+func (x *GetTracksResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_track_track_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetTracksResponse.ProtoReflect.Descriptor instead.
+func (*GetTracksResponse) Descriptor() ([]byte, []int) {
+	return file_track_track_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *GetTracksResponse) GetTracks() []*SearchTrackResponse {
+	if x != nil {
+		return x.Tracks
+	}
+	return nil
+}
+
 var File_track_track_proto protoreflect.FileDescriptor
 
 const file_track_track_proto_rawDesc = "" +
@@ -418,11 +506,16 @@ const file_track_track_proto_rawDesc = "" +
 	"\bduration\x18\x04 \x01(\x05R\bduration\x12\x1a\n" +
 	"\bcoverurl\x18\x05 \x01(\tR\bcoverurl\x12\x16\n" +
 	"\x06origin\x18\x06 \x01(\tR\x06origin\x12\x16\n" +
-	"\x06s3uuid\x18\a \x01(\tR\x06s3uuid2\xaf\x01\n" +
+	"\x06s3uuid\x18\a \x01(\tR\x06s3uuid\"$\n" +
+	"\x10GetTracksRequest\x12\x10\n" +
+	"\x03ids\x18\x01 \x03(\tR\x03ids\"G\n" +
+	"\x11GetTracksResponse\x122\n" +
+	"\x06tracks\x18\x01 \x03(\v2\x1a.track.SearchTrackResponseR\x06tracks2\xef\x01\n" +
 	"\x05Track\x12@\n" +
 	"\x06Search\x12\x19.track.SearchTrackRequest\x1a\x1b.track.SearchTracksResponse\x125\n" +
 	"\bDownload\x12\x1b.track.DownloadTrackRequest\x1a\f.track.Empty\x12-\n" +
-	"\x04Save\x12\x17.track.SaveTrackRequest\x1a\f.track.EmptyB3Z1github.com/33software/l33sten-shared/gen/go/trackb\x06proto3"
+	"\x04Save\x12\x17.track.SaveTrackRequest\x1a\f.track.Empty\x12>\n" +
+	"\tGetTracks\x12\x17.track.GetTracksRequest\x1a\x18.track.GetTracksResponseB3Z1github.com/33software/l33sten-shared/gen/go/trackb\x06proto3"
 
 var (
 	file_track_track_proto_rawDescOnce sync.Once
@@ -436,7 +529,7 @@ func file_track_track_proto_rawDescGZIP() []byte {
 	return file_track_track_proto_rawDescData
 }
 
-var file_track_track_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_track_track_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_track_track_proto_goTypes = []any{
 	(*Empty)(nil),                // 0: track.Empty
 	(*SearchTrackRequest)(nil),   // 1: track.SearchTrackRequest
@@ -444,20 +537,25 @@ var file_track_track_proto_goTypes = []any{
 	(*SearchTrackResponse)(nil),  // 3: track.SearchTrackResponse
 	(*DownloadTrackRequest)(nil), // 4: track.DownloadTrackRequest
 	(*SaveTrackRequest)(nil),     // 5: track.SaveTrackRequest
+	(*GetTracksRequest)(nil),     // 6: track.GetTracksRequest
+	(*GetTracksResponse)(nil),    // 7: track.GetTracksResponse
 }
 var file_track_track_proto_depIdxs = []int32{
 	3, // 0: track.SearchTracksResponse.tracks:type_name -> track.SearchTrackResponse
-	1, // 1: track.Track.Search:input_type -> track.SearchTrackRequest
-	4, // 2: track.Track.Download:input_type -> track.DownloadTrackRequest
-	5, // 3: track.Track.Save:input_type -> track.SaveTrackRequest
-	2, // 4: track.Track.Search:output_type -> track.SearchTracksResponse
-	0, // 5: track.Track.Download:output_type -> track.Empty
-	0, // 6: track.Track.Save:output_type -> track.Empty
-	4, // [4:7] is the sub-list for method output_type
-	1, // [1:4] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	3, // 1: track.GetTracksResponse.tracks:type_name -> track.SearchTrackResponse
+	1, // 2: track.Track.Search:input_type -> track.SearchTrackRequest
+	4, // 3: track.Track.Download:input_type -> track.DownloadTrackRequest
+	5, // 4: track.Track.Save:input_type -> track.SaveTrackRequest
+	6, // 5: track.Track.GetTracks:input_type -> track.GetTracksRequest
+	2, // 6: track.Track.Search:output_type -> track.SearchTracksResponse
+	0, // 7: track.Track.Download:output_type -> track.Empty
+	0, // 8: track.Track.Save:output_type -> track.Empty
+	7, // 9: track.Track.GetTracks:output_type -> track.GetTracksResponse
+	6, // [6:10] is the sub-list for method output_type
+	2, // [2:6] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_track_track_proto_init() }
@@ -471,7 +569,7 @@ func file_track_track_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_track_track_proto_rawDesc), len(file_track_track_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

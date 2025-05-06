@@ -10,6 +10,7 @@ service Track {
     rpc Search (SearchTrackRequest) returns (SearchTracksResponse);
     rpc Download (DownloadTrackRequest) returns (Empty);
     rpc Save (SaveTrackRequest) returns (Empty);
+    rpc GetTracks (GetTracksRequest) returns (GetTracksResponse);
 }
 
 message SearchTrackRequest {
@@ -46,3 +47,10 @@ message SaveTrackRequest {
     string s3uuid = 7;
 }
 
+message GetTracksRequest {
+    repeated string ids = 1;
+}
+
+message GetTracksResponse {
+    repeated SearchTrackResponse tracks = 1;
+}

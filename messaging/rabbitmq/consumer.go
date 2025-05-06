@@ -2,6 +2,7 @@ package rabbitmq
 
 import (
 	"context"
+	"time"
 
 	amqp "github.com/rabbitmq/amqp091-go"
 )
@@ -67,12 +68,15 @@ func (c *RabbitmqConsumer) Start (ctx context.Context) error {
 				if !ok {
 					return
 				}
-				if err := c.handler(ctx, msg.Body); err != nil {
+				tCtx, cancel := context.WithTimeout(ctx, time.Second * 15)
+				
+				if err := c.handler(tCtx, msg.Body); err != nil {
 					msg.Nack(false, true)
 				} else {
 					msg.Ack(false)
 				}
 
+				cancel()
 			}
 		}
 	}()
