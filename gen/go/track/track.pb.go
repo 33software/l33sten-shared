@@ -9,6 +9,7 @@ package track
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -435,7 +436,7 @@ func (x *GetTracksRequest) GetIds() []string {
 
 type GetTracksResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Tracks        []*SearchTrackResponse `protobuf:"bytes,1,rep,name=tracks,proto3" json:"tracks,omitempty"`
+	Tracks        []*TrackResponse       `protobuf:"bytes,1,rep,name=tracks,proto3" json:"tracks,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -470,9 +471,109 @@ func (*GetTracksResponse) Descriptor() ([]byte, []int) {
 	return file_track_track_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *GetTracksResponse) GetTracks() []*SearchTrackResponse {
+func (x *GetTracksResponse) GetTracks() []*TrackResponse {
 	if x != nil {
 		return x.Tracks
+	}
+	return nil
+}
+
+type TrackResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Artist        string                 `protobuf:"bytes,3,opt,name=artist,proto3" json:"artist,omitempty"`
+	Duration      int32                  `protobuf:"varint,4,opt,name=duration,proto3" json:"duration,omitempty"`
+	Coverurl      string                 `protobuf:"bytes,5,opt,name=coverurl,proto3" json:"coverurl,omitempty"`
+	Origin        string                 `protobuf:"bytes,6,opt,name=origin,proto3" json:"origin,omitempty"`
+	S3Uuid        string                 `protobuf:"bytes,7,opt,name=s3uuid,proto3" json:"s3uuid,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TrackResponse) Reset() {
+	*x = TrackResponse{}
+	mi := &file_track_track_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TrackResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TrackResponse) ProtoMessage() {}
+
+func (x *TrackResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_track_track_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TrackResponse.ProtoReflect.Descriptor instead.
+func (*TrackResponse) Descriptor() ([]byte, []int) {
+	return file_track_track_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *TrackResponse) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *TrackResponse) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *TrackResponse) GetArtist() string {
+	if x != nil {
+		return x.Artist
+	}
+	return ""
+}
+
+func (x *TrackResponse) GetDuration() int32 {
+	if x != nil {
+		return x.Duration
+	}
+	return 0
+}
+
+func (x *TrackResponse) GetCoverurl() string {
+	if x != nil {
+		return x.Coverurl
+	}
+	return ""
+}
+
+func (x *TrackResponse) GetOrigin() string {
+	if x != nil {
+		return x.Origin
+	}
+	return ""
+}
+
+func (x *TrackResponse) GetS3Uuid() string {
+	if x != nil {
+		return x.S3Uuid
+	}
+	return ""
+}
+
+func (x *TrackResponse) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
 	}
 	return nil
 }
@@ -481,7 +582,7 @@ var File_track_track_proto protoreflect.FileDescriptor
 
 const file_track_track_proto_rawDesc = "" +
 	"\n" +
-	"\x11track/track.proto\x12\x05track\"\a\n" +
+	"\x11track/track.proto\x12\x05track\x1a\x1fgoogle/protobuf/timestamp.proto\"\a\n" +
 	"\x05Empty\"*\n" +
 	"\x12SearchTrackRequest\x12\x14\n" +
 	"\x05query\x18\x01 \x01(\tR\x05query\"J\n" +
@@ -508,9 +609,19 @@ const file_track_track_proto_rawDesc = "" +
 	"\x06origin\x18\x06 \x01(\tR\x06origin\x12\x16\n" +
 	"\x06s3uuid\x18\a \x01(\tR\x06s3uuid\"$\n" +
 	"\x10GetTracksRequest\x12\x10\n" +
-	"\x03ids\x18\x01 \x03(\tR\x03ids\"G\n" +
-	"\x11GetTracksResponse\x122\n" +
-	"\x06tracks\x18\x01 \x03(\v2\x1a.track.SearchTrackResponseR\x06tracks2\xef\x01\n" +
+	"\x03ids\x18\x01 \x03(\tR\x03ids\"A\n" +
+	"\x11GetTracksResponse\x12,\n" +
+	"\x06tracks\x18\x01 \x03(\v2\x14.track.TrackResponseR\x06tracks\"\xf0\x01\n" +
+	"\rTrackResponse\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
+	"\x05title\x18\x02 \x01(\tR\x05title\x12\x16\n" +
+	"\x06artist\x18\x03 \x01(\tR\x06artist\x12\x1a\n" +
+	"\bduration\x18\x04 \x01(\x05R\bduration\x12\x1a\n" +
+	"\bcoverurl\x18\x05 \x01(\tR\bcoverurl\x12\x16\n" +
+	"\x06origin\x18\x06 \x01(\tR\x06origin\x12\x16\n" +
+	"\x06s3uuid\x18\a \x01(\tR\x06s3uuid\x129\n" +
+	"\n" +
+	"created_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt2\xef\x01\n" +
 	"\x05Track\x12@\n" +
 	"\x06Search\x12\x19.track.SearchTrackRequest\x1a\x1b.track.SearchTracksResponse\x125\n" +
 	"\bDownload\x12\x1b.track.DownloadTrackRequest\x1a\f.track.Empty\x12-\n" +
@@ -529,33 +640,36 @@ func file_track_track_proto_rawDescGZIP() []byte {
 	return file_track_track_proto_rawDescData
 }
 
-var file_track_track_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_track_track_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_track_track_proto_goTypes = []any{
-	(*Empty)(nil),                // 0: track.Empty
-	(*SearchTrackRequest)(nil),   // 1: track.SearchTrackRequest
-	(*SearchTracksResponse)(nil), // 2: track.SearchTracksResponse
-	(*SearchTrackResponse)(nil),  // 3: track.SearchTrackResponse
-	(*DownloadTrackRequest)(nil), // 4: track.DownloadTrackRequest
-	(*SaveTrackRequest)(nil),     // 5: track.SaveTrackRequest
-	(*GetTracksRequest)(nil),     // 6: track.GetTracksRequest
-	(*GetTracksResponse)(nil),    // 7: track.GetTracksResponse
+	(*Empty)(nil),                 // 0: track.Empty
+	(*SearchTrackRequest)(nil),    // 1: track.SearchTrackRequest
+	(*SearchTracksResponse)(nil),  // 2: track.SearchTracksResponse
+	(*SearchTrackResponse)(nil),   // 3: track.SearchTrackResponse
+	(*DownloadTrackRequest)(nil),  // 4: track.DownloadTrackRequest
+	(*SaveTrackRequest)(nil),      // 5: track.SaveTrackRequest
+	(*GetTracksRequest)(nil),      // 6: track.GetTracksRequest
+	(*GetTracksResponse)(nil),     // 7: track.GetTracksResponse
+	(*TrackResponse)(nil),         // 8: track.TrackResponse
+	(*timestamppb.Timestamp)(nil), // 9: google.protobuf.Timestamp
 }
 var file_track_track_proto_depIdxs = []int32{
 	3, // 0: track.SearchTracksResponse.tracks:type_name -> track.SearchTrackResponse
-	3, // 1: track.GetTracksResponse.tracks:type_name -> track.SearchTrackResponse
-	1, // 2: track.Track.Search:input_type -> track.SearchTrackRequest
-	4, // 3: track.Track.Download:input_type -> track.DownloadTrackRequest
-	5, // 4: track.Track.Save:input_type -> track.SaveTrackRequest
-	6, // 5: track.Track.GetTracks:input_type -> track.GetTracksRequest
-	2, // 6: track.Track.Search:output_type -> track.SearchTracksResponse
-	0, // 7: track.Track.Download:output_type -> track.Empty
-	0, // 8: track.Track.Save:output_type -> track.Empty
-	7, // 9: track.Track.GetTracks:output_type -> track.GetTracksResponse
-	6, // [6:10] is the sub-list for method output_type
-	2, // [2:6] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	8, // 1: track.GetTracksResponse.tracks:type_name -> track.TrackResponse
+	9, // 2: track.TrackResponse.created_at:type_name -> google.protobuf.Timestamp
+	1, // 3: track.Track.Search:input_type -> track.SearchTrackRequest
+	4, // 4: track.Track.Download:input_type -> track.DownloadTrackRequest
+	5, // 5: track.Track.Save:input_type -> track.SaveTrackRequest
+	6, // 6: track.Track.GetTracks:input_type -> track.GetTracksRequest
+	2, // 7: track.Track.Search:output_type -> track.SearchTracksResponse
+	0, // 8: track.Track.Download:output_type -> track.Empty
+	0, // 9: track.Track.Save:output_type -> track.Empty
+	7, // 10: track.Track.GetTracks:output_type -> track.GetTracksResponse
+	7, // [7:11] is the sub-list for method output_type
+	3, // [3:7] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_track_track_proto_init() }
@@ -569,7 +683,7 @@ func file_track_track_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_track_track_proto_rawDesc), len(file_track_track_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
