@@ -13,6 +13,16 @@ service Track {
     rpc Download (DownloadTrackRequest) returns (Empty);
     rpc Save (SaveTrackRequest) returns (Empty);
     rpc GetTracks (GetTracksRequest) returns (GetTracksResponse);
+    rpc GetPlayURL (GetPlayURLRequest) returns (GetPlayURLResponse);
+}
+
+message GetPlayURLRequest {
+    string track_id = 1;
+}
+
+message GetPlayURLResponse {
+    string url = 1;
+    google.protobuf.Timestamp expires_at = 2;
 }
 
 message SearchTrackRequest {
