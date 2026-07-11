@@ -1,0 +1,52 @@
+name: PR policy
+
+# Единый файл кладётся в каждую репу как .github/workflows/pr-policy.yml
+# Правила:
+#   1. В master можно мержить ТОЛЬКО из develop
+#   2. В develop можно мержить только ветки feature/<issue#> или fix/<issue#>
+#   3. Каждый коммит: "feat: [<issue#>] <desc>" или "fix: [<issue#>] <desc>"
+# На free+private это "мягкая" проверка (горит красным). После апгрейда до Team
+# или публикации репы — добавляется в required status checks и начинает блокировать мерж.
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+    branches: [master, develop]
+
+jobs:
+  policy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge source & branch naming
+        env:
+          BASE: ${{ github.base_ref }}
+          HEAD: ${{ github.head_ref }}
+        run: |
+          echo "PR: '$HEAD' -> '$BASE'"
+          if [ "$BASE" = "master" ] && [ "$HEAD" != "develop" ]; then
+            echo "::error::В master можно мержить только из 'develop' (пришло '$HEAD')."
+            exit 1
+          fi
+          if [ "$BASE" = "develop" ] && ! echo "$HEAD" | grep -qE '^(feature|fix)/[0-9]+$'; then
+            echo "::error::Ветка в develop должна быть feature/<issue#> или fix/<issue#> (пришло '$HEAD')."
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Commit message format
+        env:
+          BASE: ${{ github.base_ref }}
+        run: |
+          range="origin/$BASE..HEAD"
+          bad=0
+          while IFS= read -r subject; do
+            [ -z "$subject" ] && continue
+            if ! echo "$subject" | grep -qE '^(feat|fix): \[[0-9]+\] .+'; then
+              echo "::error::Плохой commit-msg: '$subject' — ожидается 'feat|fix: [<issue#>] <desc>'"
+              bad=1
+            fi
+          done < <(git log --no-merges --format='%s' "$range")
+          exit $bad
