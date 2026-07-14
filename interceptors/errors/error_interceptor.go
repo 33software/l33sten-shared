@@ -15,10 +15,11 @@ func UnrayErrorInterceptor() grpc.UnaryServerInterceptor {
 		resp, err := handler(ctx, request)
 
 		return resp, ErrToGRPCStatus(err)
-		
-}}
 
-func ErrToGRPCStatus (err error) error {
+	}
+}
+
+func ErrToGRPCStatus(err error) error {
 	if err == nil {
 		return nil
 	}
@@ -34,6 +35,8 @@ func ErrToGRPCStatus (err error) error {
 		return status.Error(codes.NotFound, err.Error())
 	case errors.Is(err, sharederr.ErrMismatchedPass):
 		return status.Error(codes.Unauthenticated, "Unauthenticated")
+	case errors.Is(err, sharederr.ErrForbidden):
+		return status.Error(codes.PermissionDenied, err.Error())
 	default:
 		return status.Error(codes.Internal, err.Error())
 	}
