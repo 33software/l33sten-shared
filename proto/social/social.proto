@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package social;
+
+option go_package = "github.com/33software/l33sten-shared/gen/go/social";
+
+import "google/protobuf/timestamp.proto";
+
+service Social {
+    rpc AddFriend(AddFriendRequest) returns (AddFriendResponse);
+    rpc AcceptFriend(AcceptFriendRequest) returns (AcceptFriendResponse);
+    rpc DeclineFriend(DeclineFriendRequest) returns (Empty);
+    rpc RemoveFriend(RemoveFriendRequest) returns (Empty);
+    rpc ListFriends(ListFriendsRequest) returns (ListFriendsResponse);
+    rpc ListIncoming(ListIncomingRequest) returns (ListIncomingResponse);
+    rpc ListOutgoing(ListOutgoingRequest) returns (ListOutgoingResponse);
+}
+
+message Empty {}
+
+message Friendship {
+    string id = 1;
+    string requester_id = 2;
+    string addressee_id = 3;
+    string status = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
+}
+
+message AddFriendRequest {
+    string requester_id = 1;
+    string addressee_id = 2;
+}
+
+message AddFriendResponse {
+    Friendship friendship = 1;
+}
+
+message AcceptFriendRequest {
+    string friendship_id = 1;
+    string user_id = 2;
+}
+
+message AcceptFriendResponse {
+    Friendship friendship = 1;
+}
+
+message DeclineFriendRequest {
+    string friendship_id = 1;
+    string user_id = 2;
+}
+
+message RemoveFriendRequest {
+    string friendship_id = 1;
+    string user_id = 2;
+}
+
+message ListFriendsRequest {
+    string user_id = 1;
+}
+
+message ListFriendsResponse {
+    repeated Friendship friends = 1;
+}
+
+message ListIncomingRequest {
+    string user_id = 1;
+}
+
+message ListIncomingResponse {
+    repeated Friendship friends = 1;
+}
+
+message ListOutgoingRequest {
+    string user_id = 1;
+}
+
+message ListOutgoingResponse {
+    repeated Friendship friends = 1;
+}
